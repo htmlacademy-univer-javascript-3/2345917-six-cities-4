@@ -1,6 +1,7 @@
 import { Offer } from '../../types/offer';
 import CityCardsList from '../../city-cards-list/city-cards-list';
 import { Link } from 'react-router-dom';
+import Map from '../../map/map';
 
 type MainScreenProps = {
   placesCount: number;
@@ -102,7 +103,7 @@ function MainScreen({placesCount, offers}: MainScreenProps): JSX.Element {
               <CityCardsList offers={offers} />
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <section className="cities__map map"><Map city={offers[0].city} points={offers} selectedPoint={undefined}/></section>
             </div>
           </div>
         </div>
