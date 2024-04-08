@@ -8,13 +8,15 @@ import { Status } from '../constants/status';
 import { Direction } from '../constants/direction';
 import PrivateRoute from '../pages/private-route/private-route';
 import { Offer } from '../types/offer';
+import { Review } from '../types/review';
 
 type AppScreenProps = {
   placesCount: number;
   offers: Offer[];
+  reviews: Review[];
 }
 
-function App({placesCount, offers}: AppScreenProps): JSX.Element {
+function App({placesCount, offers, reviews}: AppScreenProps): JSX.Element {
   const favorites = offers.filter((o) => o.isFavorite);
   return (
     <BrowserRouter>
@@ -39,7 +41,7 @@ function App({placesCount, offers}: AppScreenProps): JSX.Element {
         />
         <Route
           path={Direction.Offer}
-          element={<OfferScreen/>}
+          element={<OfferScreen reviews={reviews}/>}
         />
         <Route
           path="*"

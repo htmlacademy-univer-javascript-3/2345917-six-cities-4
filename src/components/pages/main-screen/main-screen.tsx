@@ -1,5 +1,6 @@
 import { Offer } from '../../types/offer';
 import CityCardsList from '../../city-cards-list/city-cards-list';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Map from '../../map/map';
 
@@ -9,6 +10,7 @@ type MainScreenProps = {
 }
 
 function MainScreen({placesCount, offers}: MainScreenProps): JSX.Element {
+  const [activeCard, pushActiveCard] = useState(0);
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -100,11 +102,11 @@ function MainScreen({placesCount, offers}: MainScreenProps): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <CityCardsList offers={offers} />
+              <div className ="cities__places-list places__list tabs__content">
+                <CityCardsList isMainScreen offers={offers} pushActiveCard={pushActiveCard} />
+              </div>
             </section>
-            <div className="cities__right-section">
-              <section className="cities__map map"><Map city={offers[0].city} points={offers} selectedPoint={undefined}/></section>
-            </div>
+            <section className="cities__right-section"><Map isMainScreen offers={offers} activeCard={activeCard}/></section>
           </div>
         </div>
       </main>
