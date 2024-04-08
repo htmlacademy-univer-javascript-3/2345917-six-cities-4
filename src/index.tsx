@@ -9,8 +9,15 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function pushActiveCard(_id: number): void {
+  throw new Error('Function not implemented.');
+}
+
 root.render(
   <React.StrictMode>
-    <App placesCount={Settings.placesCount}offers={offers} reviews={reviews}/>
+    <App placesCount={Settings.placesCount}offers={offers} reviews={reviews} pushActiveCard={pushActiveCard} isMainScreen={Settings.isMainScreen}/>
   </React.StrictMode>
 );
+
+

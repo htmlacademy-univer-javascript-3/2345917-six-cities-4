@@ -14,10 +14,11 @@ type AppScreenProps = {
   placesCount: number;
   offers: Offer[];
   reviews: Review[];
+  pushActiveCard(id:number): void;
+  isMainScreen: boolean;
 }
 
-function App({placesCount, offers, reviews}: AppScreenProps): JSX.Element {
-  const favorites = offers.filter((o) => o.isFavorite);
+function App({placesCount, offers, reviews, pushActiveCard, isMainScreen}: AppScreenProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
@@ -35,7 +36,7 @@ function App({placesCount, offers, reviews}: AppScreenProps): JSX.Element {
             <PrivateRoute
               authorizationStatus={Status.Authorization}
             >
-              <FavotitesScreen offers ={favorites}/>
+              <FavotitesScreen offers ={offers} pushActiveCard={pushActiveCard} isMainScreen={isMainScreen}/>
             </PrivateRoute>
           }
         />
