@@ -4,8 +4,10 @@ import { Link } from 'react-router-dom';
 
 type FavoritesProps = {
   offers: Offer[];
+  pushActiveCard(id:number): void;
+  isMainScreen: boolean;
 }
-function FavoritesScreen({offers}: FavoritesProps): JSX.Element{
+function FavoritesScreen({offers, pushActiveCard, isMainScreen }: FavoritesProps): JSX.Element{
   return (
     <div className ="page">
       <header className ="header">
@@ -52,8 +54,7 @@ function FavoritesScreen({offers}: FavoritesProps): JSX.Element{
                 </div>
                 <div className ="favorites__places">
                   {offers.map((offer) =>
-                    <CityCard key={offer.id} offer={offer} cardType='default'/>
-                  )}
+                    <CityCard isMainScreen={isMainScreen} mouseCursor = {pushActiveCard} key={offer.id} offer={offer}/>)};
                 </div>
               </li>
             </ul>

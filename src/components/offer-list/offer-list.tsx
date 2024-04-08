@@ -7,7 +7,7 @@ type OffersListProps = {
   isMainScreen: boolean;
 };
 
-export default function OffersList({ offers, pushActiveCard, isMainScreen }: OffersListProps) {
+function OffersList({ offers, pushActiveCard, isMainScreen }: OffersListProps) {
   return (
     <div className="cities__places-list places__list tabs__content">
       {offers.map((offer) =>
@@ -15,3 +15,5 @@ export default function OffersList({ offers, pushActiveCard, isMainScreen }: Off
     </div>
   );
 }
+
+export default OffersList;
