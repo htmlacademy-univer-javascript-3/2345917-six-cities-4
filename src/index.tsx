@@ -3,13 +3,21 @@ import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
 import {Settings} from './components/constants/const';
 import {offers} from './components/mocks/offers';
+import { reviews } from './components/mocks/reviews';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function pushActiveCard(_id: number): void {
+  throw new Error('Function not implemented.');
+}
+
 root.render(
   <React.StrictMode>
-    <App placesCount={Settings.placesCount}offers={offers}/>
+    <App placesCount={Settings.placesCount}offers={offers} reviews={reviews} pushActiveCard={pushActiveCard} isMainScreen={Settings.isMainScreen}/>
   </React.StrictMode>
 );
+
+

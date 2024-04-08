@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
-import {Icon, Marker, layerGroup} from 'leaflet';
+import {Icon, Marker} from 'leaflet';
 import useMap from '../../hooks/use-map';
-import {Offer, City} from '../types/offer';
+import { MapClassify } from '../constants/classes';
+import {Offer} from '../types/offer';
 import 'leaflet/dist/leaflet.css';
 
 const URL_MARKER_DEFAULT = 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg';
@@ -20,41 +21,36 @@ const currentCustomIcon = new Icon({
 });
 
 type MapProps = {
-  city: City;
-  points: Offer[];
-  selectedPoint: Offer | undefined;
+  offers: Offer[];
+  activeCard: number;
+  isMainScreen: boolean;
 }
 
 function Map(props: MapProps): JSX.Element {
-  const {city, points, selectedPoint} = props;
+  const {offers, activeCard, isMainScreen} = props;
   const mapRef = React.useRef(null);
-  const map = useMap(mapRef, city);
+  const map = useMap(mapRef, offers[0].city);
 
   useEffect(() => {
     if (map) {
-      const markerLayer = layerGroup().addTo(map);
-      points.map((e) => e.city).forEach((point) => {
+      offers.forEach((offer: Offer) => {
         const marker = new Marker({
-          lat: point.latitude,
-          lng: point.longitude,
+          lat: offer.city.latitude,
+          lng: offer.city.longitude,
         });
 
         marker
           .setIcon(
-            selectedPoint !== undefined && point.name === selectedPoint.city.name
+            activeCard !== undefined && offer.id === activeCard.toString()
               ? currentCustomIcon
               : defaultCustomIcon
           )
-          .addTo(markerLayer);
+          .addTo(map);
       });
-
-      return () => {
-        map.removeLayer(markerLayer);
-      };
     }
-  }, [map, points, selectedPoint]);
+  }, [map, offers, activeCard]);
 
-  return <div style={{height: '100%'}} ref={mapRef}></div>;
+  return <section className={isMainScreen ? MapClassify.MainMapChapter : MapClassify.PropertyMapChapter} ref={mapRef}></section>;
 }
 
 export default Map;

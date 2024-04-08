@@ -6,12 +6,13 @@ export type Offer = {
   title: string;
   reviews: Review [];
   city: City;
+  description: string;
   isFavorite: boolean;
   isPremium: boolean;
   type: string;
   rating: number;
   numberOfBedrooms: number;
-  maxNumberOfQuests: number;
+  maxNumberOfGuests: number;
   price: number;
   householdItems: string;
   autor: Autor;
