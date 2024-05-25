@@ -1,30 +1,25 @@
 import MainScreen from '../pages/main-screen/main-screen';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import ErrorScreen from '../pages/error-screen/error-screen';
-import FavotitesScreen from '../pages/favorites-screen/favorites-screen';
+import FavoritesScreen from '../pages/favorites-screen/favorites-screen';
 import LoginScreen from '../pages/login-screen/login-screen';
 import OfferScreen from '../pages/offer-screen/offer-screen';
 import { Status } from '../constants/status';
 import { Direction } from '../constants/direction';
 import PrivateRoute from '../pages/private-route/private-route';
-import { Offer } from '../types/offer';
 import { Review } from '../types/review';
 
 type AppScreenProps = {
-  placesCount: number;
-  offers: Offer[];
   reviews: Review[];
-  pushActiveCard(id:number): void;
-  isMainScreen: boolean;
 }
 
-function App({placesCount, offers, reviews, pushActiveCard, isMainScreen}: AppScreenProps): JSX.Element {
+function App({reviews }: AppScreenProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={Direction.Main}
-          element={<MainScreen placesCount={placesCount} offers={offers}/>}
+          element={<MainScreen/>}
         />
         <Route
           path={Direction.Login}
@@ -36,7 +31,7 @@ function App({placesCount, offers, reviews, pushActiveCard, isMainScreen}: AppSc
             <PrivateRoute
               authorizationStatus={Status.Authorization}
             >
-              <FavotitesScreen offers ={offers} pushActiveCard={pushActiveCard} isMainScreen={isMainScreen}/>
+              <FavoritesScreen/>
             </PrivateRoute>
           }
         />
