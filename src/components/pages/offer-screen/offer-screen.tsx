@@ -1,28 +1,24 @@
 import { Link } from 'react-router-dom';
 import CommentForm from '../../sending-comment-form/sending-comment-form';
 import { Review } from '../../types/review';
-import ReviewsList from '../../review-list/review-list';
-import Map from '../../map/map';
+import ReviewsList from '../../../components/reviews-list/reviews-list';
+import Map from '../../../components/map/map';
 import { offers } from '../../mocks/offers';
-import CityCardList from '../../offer-list/offer-list';
-import { useParams } from 'react-router-dom';
-import { useState } from 'react';
+import { cities } from '../../mocks/cities';
+import CityCardList from '../../../components/offer-list/offer-list';
 
 type OfferScreenProps = {
   reviews: Review[];
 }
 
-function OfferScreen({reviews}: OfferScreenProps): JSX.Element{
-  const {id} = useParams();
-  const [{title, description, isFavorite, isPremium, type, rating, numberOfBedrooms, maxNumberOfGuests, price, householdItems, autor}] = offers.filter((offer) => offer.id.toString() === id);
-  const [activeCard, pushActiveCard] = useState(0);
+function OfferScreen({reviews}: OfferScreenProps): JSX.Element {
   return (
     <div className ="page">
       <header className ="header">
         <div className ="container">
           <div className ="header__wrapper">
             <div className ="header__left">
-              <Link to = '/' className ="header__logo-link">
+              <Link to='/' className="header__logo-link">
                 <img className ="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
               </Link>
             </div>
@@ -75,13 +71,13 @@ function OfferScreen({reviews}: OfferScreenProps): JSX.Element{
           <div className ="offer__container container">
             <div className ="offer__wrapper">
               <div className ="offer__mark">
-                <span>{isPremium ? 'Premium' : ''}</span>
+                <span>Premium</span>
               </div>
               <div className ="offer__name-wrapper">
                 <h1 className ="offer__name">
-                  {title}
+                  Beautiful &amp; luxurious studio at great location
                 </h1>
-                <button className ={`"offer__bookmark-button button" ${isFavorite ? 'offer__bookmark-button--active' : ''}`} type="button">
+                <button className ="offer__bookmark-button button" type="button">
                   <svg className ="offer__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
@@ -90,31 +86,58 @@ function OfferScreen({reviews}: OfferScreenProps): JSX.Element{
               </div>
               <div className ="offer__rating rating">
                 <div className ="offer__stars rating__stars">
-                  <span style={{width: `${(rating / 5) * 100}%`}}></span>
+                  <span style={{width: '80%'}}></span>
                   <span className ="visually-hidden">Rating</span>
                 </div>
-                <span className ="offer__rating-value rating__value">{rating}</span>
+                <span className ="offer__rating-value rating__value">4.8</span>
               </div>
               <ul className ="offer__features">
                 <li className ="offer__feature offer__feature--entire">
-                  {type}
+                  Apartment
                 </li>
                 <li className ="offer__feature offer__feature--bedrooms">
-                  {`${numberOfBedrooms} Bedrooms`}
+                  3 Bedrooms
                 </li>
                 <li className ="offer__feature offer__feature--adults">
-                  {`Max ${maxNumberOfGuests} adults`}
+                  Max 4 adults
                 </li>
               </ul>
               <div className ="offer__price">
-                <b className ="offer__price-value">&euro;{price}</b>
+                <b className ="offer__price-value">&euro;120</b>
                 <span className ="offer__price-text">&nbsp;night</span>
               </div>
               <div className ="offer__inside">
                 <h2 className ="offer__inside-title">What&apos;s inside</h2>
                 <ul className ="offer__inside-list">
                   <li className ="offer__inside-item">
-                    {householdItems}
+                  Wi-Fi
+                  </li>
+                  <li className ="offer__inside-item">
+                    Washing machine
+                  </li>
+                  <li className ="offer__inside-item">
+                    Towels
+                  </li>
+                  <li className ="offer__inside-item">
+                    Heating
+                  </li>
+                  <li className ="offer__inside-item">
+                    Coffee machine
+                  </li>
+                  <li className ="offer__inside-item">
+                    Baby seat
+                  </li>
+                  <li className ="offer__inside-item">
+                    Kitchen
+                  </li>
+                  <li className ="offer__inside-item">
+                    Dishwasher
+                  </li>
+                  <li className ="offer__inside-item">
+                    Cabel TV
+                  </li>
+                  <li className ="offer__inside-item">
+                    Fridge
                   </li>
                 </ul>
               </div>
@@ -125,18 +148,19 @@ function OfferScreen({reviews}: OfferScreenProps): JSX.Element{
                     <img className ="offer__avatar user__avatar" src="img/avatar-angelina.jpg" width="74" height="74" alt="Host avatar"/>
                   </div>
                   <span className ="offer__user-name">
-                    {autor.avatar}
+                    Angelina
                   </span>
                   <span className ="offer__user-status">
-                    {autor.isPro ? 'Pro' : ''}
+                    Pro
                   </span>
                 </div>
                 <div className ="offer__description">
-                  {description.split('.').map((sentense) => (
-                    <p className="offer__text" key={sentense}>
-                      {sentense}
-                    </p>
-                  ))}
+                  <p className ="offer__text">
+                    A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.
+                  </p>
+                  <p className ="offer__text">
+                    An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful.
+                  </p>
                 </div>
               </div>
               <section className ="offer__reviews reviews">
@@ -147,15 +171,13 @@ function OfferScreen({reviews}: OfferScreenProps): JSX.Element{
             </div>
           </div>
           <section className ="offer__map map">
-            <Map isMainScreen = {false} offers={offers} activeCard={activeCard}/>
+            <Map city={cities[3]} offers={offers} selectedPoint={undefined}/>
           </section>
         </section>
         <div className ="container">
           <section className ="near-places places">
             <h2 className ="near-places__title">Other places in the neighbourhood</h2>
-            <div className ="near-places__list places__list">
-              <CityCardList isMainScreen = {false} offers={offers.slice(0,3)} pushActiveCard={pushActiveCard}/>
-            </div>
+            <CityCardList offers={offers.slice(0, 3)} listType={'default'}/>
           </section>
         </div>
       </main>

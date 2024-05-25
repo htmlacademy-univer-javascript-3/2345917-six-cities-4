@@ -1,5 +1,6 @@
 import { Offer } from '../types/offer';
 import { reviews } from './reviews';
+import { cities } from './cities';
 
 export const offers: Offer[] = [
   {
@@ -7,7 +8,7 @@ export const offers: Offer[] = [
     previewImage: ['img/apartment-01.jpg'],
     title: 'Beautiful & luxurious apartment at great location',
     reviews: [reviews[0]],
-    city: {name: 'Amsterdam', latitude: 52.3909553943508, longitude: 4.85309666406198, zoom: 10},
+    city: cities[0],
     description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.',
     isFavorite: true,
     isPremium: true,
@@ -25,7 +26,7 @@ export const offers: Offer[] = [
     previewImage: ['img/room.jpg'],
     title: 'Cozy & luxurious room',
     reviews: [reviews[1]],
-    city: {name: 'Amsterdam', latitude: 52.3609553943508, longitude: 4.85309666406198, zoom: 10},
+    city: cities[1],
     description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.',
     isFavorite: false,
     isPremium: true,
@@ -43,7 +44,7 @@ export const offers: Offer[] = [
     previewImage: ['img/room-small.jpg'],
     title: 'Comfortable & pleasant room',
     reviews: [reviews[2]],
-    city: {name: 'Amsterdam', latitude: 52.3909553943508, longitude: 4.929309666406198, zoom: 10},
+    city: cities[0],
     description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.',
     isFavorite: true,
     isPremium: false,
@@ -61,7 +62,7 @@ export const offers: Offer[] = [
     previewImage: ['img/apartment-small-03.jpg'],
     title: 'Wonderful & cozy apartment in a pleasant area',
     reviews: [reviews[3]],
-    city: {name: 'Amsterdam', latitude: 52.3809553943508, longitude: 4.939309666406198, zoom: 10},
+    city: cities[1],
     description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.',
     isFavorite: false,
     isPremium: false,

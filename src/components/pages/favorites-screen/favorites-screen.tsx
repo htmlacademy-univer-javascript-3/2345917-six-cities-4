@@ -1,13 +1,10 @@
 import CityCard from '../../city-cards/city-cards';
-import { Offer } from '../../types/offer';
+import { useAppSelector } from '../../../hooks/index';
 import { Link } from 'react-router-dom';
 
-type FavoritesProps = {
-  offers: Offer[];
-  pushActiveCard(id:number): void;
-  isMainScreen: boolean;
-}
-function FavoritesScreen({offers, pushActiveCard, isMainScreen }: FavoritesProps): JSX.Element{
+function FavoritesScreen(): JSX.Element{
+  const offers = useAppSelector((state) => state.offers);
+  const favoriteOffers = offers.filter((offer) => offer.isFavorite);
   return (
     <div className ="page">
       <header className ="header">
@@ -53,8 +50,9 @@ function FavoritesScreen({offers, pushActiveCard, isMainScreen }: FavoritesProps
                   </div>
                 </div>
                 <div className ="favorites__places">
-                  {offers.map((offer) =>
-                    <CityCard isMainScreen={isMainScreen} mouseCursor = {pushActiveCard} key={offer.id} offer={offer}/>)};
+                  {favoriteOffers.map((offer) =>
+                    <CityCard key={offer.id} offer={offer} cardType='default'/>
+                  )}
                 </div>
               </li>
             </ul>

@@ -1,27 +1,20 @@
 import { Offer } from '../types/offer';
 import { Link } from 'react-router-dom';
-import { AppClasses } from '../constants/classes';
 
 type OffersProps = {
   offer: Offer;
-  isMainScreen: boolean;
-  mouseCursor(id:number): void;
+  cardType: 'default' | 'near';
 }
 
-function CityCard({offer, isMainScreen, mouseCursor}: OffersProps): JSX.Element {
+function CityCard({offer, cardType}: OffersProps): JSX.Element {
   return (
-    <article className={isMainScreen ? AppClasses.NoteMain : AppClasses.NoteProperty}
-      id ={offer.id.toString()}
-      onMouseOver={(evt)=> {
-        const target = evt.currentTarget as HTMLElement;
-        mouseCursor(+target.id);
-      }}
-    >
-      {isMainScreen &&
+    <article className ={`${cardType === 'default' ? 'cities__card place-card' : 'near-places__card place-card'}`}>
+      {offer.isPremium && (
         <div className="place-card__mark">
-          <span>{offer.isPremium ? 'Premium' : ''}</span>
-        </div>}
-      <div className={isMainScreen ? AppClasses.ImagePackingMain : AppClasses.ImagePackingProperty}>
+          <span>Premium</span>
+        </div>
+      )}
+      <div className ="cities__image-wrapper place-card__image-wrapper">
         <a href="#">
           <img className ="place-card__image" src={offer.previewImage[0]} width="260" height="200" alt="Place image"/>
         </a>
