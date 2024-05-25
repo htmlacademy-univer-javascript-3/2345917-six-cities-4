@@ -1,15 +1,16 @@
 import {Offer} from '../../components/types/offer';
 import CityCard from '../city-cards/city-cards';
 
-type CityCardPropsList = {
+type OffersPropsList = {
   offers: Offer[];
+  listType: 'default' | 'near';
 };
 
-function CityCardList({offers}: CityCardPropsList): JSX.Element {
+function CityCardList({offers, listType}: OffersPropsList): JSX.Element {
   return (
-    <div className="cities__places-list places__list tabs__content">
+    <div className={`${listType === 'default' ? 'cities__places-list places__list tabs__content' : 'near-places__list places__list'}`}>
       {offers.map((offer) => (
-        <CityCard key={offer.id} offer={offer}/>
+        <CityCard key={offer.id} offer={offer} cardsType={listType}/>
       ))}
     </div>
   );

@@ -1,5 +1,6 @@
 import { Offer } from '../types/offer';
 import { reviews } from './reviews';
+import { cities } from './cities';
 
 export const offers: Offer[] = [
   {
@@ -7,7 +8,7 @@ export const offers: Offer[] = [
     previewImage: ['img/apartment-01.jpg'],
     title: 'Beautiful & luxurious apartment at great location',
     reviews: [reviews[0]],
-    city: {name: 'Amsterdam', latitude: 52.3909553943508, longitude: 4.85309666406198, zoom: 10},
+    city: cities[0],
     isFavorite: true,
     isPremium: true,
     type: 'Apartament',
@@ -24,7 +25,7 @@ export const offers: Offer[] = [
     previewImage: ['img/room.jpg'],
     title: 'Cozy & luxurious room',
     reviews: [reviews[1]],
-    city: {name: 'Amsterdam', latitude: 52.3609553943508, longitude: 4.85309666406198, zoom: 10},
+    city: cities[1],
     isFavorite: false,
     isPremium: true,
     type: 'Room',
@@ -41,7 +42,7 @@ export const offers: Offer[] = [
     previewImage: ['img/room-small.jpg'],
     title: 'Comfortable & pleasant room',
     reviews: [reviews[2]],
-    city: {name: 'Amsterdam', latitude: 52.3909553943508, longitude: 4.929309666406198, zoom: 10},
+    city: cities[2],
     isFavorite: true,
     isPremium: false,
     type: 'Room',
@@ -58,7 +59,7 @@ export const offers: Offer[] = [
     previewImage: ['img/apartment-small-03.jpg'],
     title: 'Wonderful & cozy apartment in a pleasant area',
     reviews: [reviews[3]],
-    city: {name: 'Amsterdam', latitude: 52.3809553943508, longitude: 4.939309666406198, zoom: 10},
+    city: cities[3],
     isFavorite: false,
     isPremium: false,
     type: 'Apartament',

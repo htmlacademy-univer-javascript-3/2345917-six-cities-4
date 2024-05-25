@@ -21,27 +21,33 @@ const currentCustomIcon = new Icon({
 
 type MapProps = {
   city: City;
-  points: Offer[];
+  offers: Offer[];
   selectedPoint: Offer | undefined;
 }
 
 function Map(props: MapProps): JSX.Element {
-  const {city, points, selectedPoint} = props;
+  const {city, offers, selectedPoint} = props;
   const mapRef = React.useRef(null);
   const map = useMap(mapRef, city);
 
   useEffect(() => {
     if (map) {
+      map.setView([city.latitude, city.longitude]);
+    }
+  }, [map, city]);
+
+  useEffect(() => {
+    if (map) {
       const markerLayer = layerGroup().addTo(map);
-      points.map((e) => e.city).forEach((point) => {
+      offers.map((e) => e.city).forEach((offer) => {
         const marker = new Marker({
-          lat: point.latitude,
-          lng: point.longitude,
+          lat: offer.latitude,
+          lng: offer.longitude,
         });
 
         marker
           .setIcon(
-            selectedPoint !== undefined && point.name === selectedPoint.city.name
+            selectedPoint !== undefined && offer.name === selectedPoint.city.name
               ? currentCustomIcon
               : defaultCustomIcon
           )
@@ -52,7 +58,7 @@ function Map(props: MapProps): JSX.Element {
         map.removeLayer(markerLayer);
       };
     }
-  }, [map, points, selectedPoint]);
+  }, [map, offers, selectedPoint]);
 
   return <div style={{height: '100%'}} ref={mapRef}></div>;
 }

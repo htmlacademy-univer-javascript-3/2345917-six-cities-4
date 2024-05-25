@@ -3,11 +3,12 @@ import { Link } from 'react-router-dom';
 
 type OffersProps = {
   offer: Offer;
+  cardsType: 'default' | 'near';
 }
 
-function CityCard({offer}: OffersProps): JSX.Element {
+function CityCard({offer, cardsType}: OffersProps): JSX.Element {
   return (
-    <article className ="cities__card place-card">
+    <article className ={`${cardsType === 'default' ? 'cities__card place-card' : 'near-places__card place-card'}`}>
       {offer.isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
