@@ -1,5 +1,7 @@
 import { Offer } from '../types/offer';
 import { Link } from 'react-router-dom';
+import { useAppDispatch } from '../../hooks/index';
+import { changeSelectedPoint } from '../../store/action';
 
 type OffersProps = {
   offer: Offer;
@@ -7,8 +9,9 @@ type OffersProps = {
 }
 
 function CityCard({offer, cardType}: OffersProps): JSX.Element {
+  const dispatch = useAppDispatch();
   return (
-    <article className ={`${cardType === 'default' ? 'cities__card place-card' : 'near-places__card place-card'}`}>
+    <article className ={`${cardType === 'default' ? 'cities__card place-card' : 'near-places__card place-card'}`} onMouseEnter={() => dispatch(changeSelectedPoint(offer.city))} onMouseLeave={() => dispatch(changeSelectedPoint(undefined))}>
       {offer.isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
