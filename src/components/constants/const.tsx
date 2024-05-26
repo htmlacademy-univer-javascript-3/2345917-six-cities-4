@@ -1,5 +1,7 @@
 import { Offer } from './../types/offer';
 
+export const cities = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
+
 const getSorting = (offers: Offer[], sortingType: string): Offer[] | undefined => {
   const defaultOffers = offers.slice();
   switch (sortingType) {
@@ -15,3 +17,5 @@ const getSorting = (offers: Offer[], sortingType: string): Offer[] | undefined =
 };
 
 export default getSorting;
+
+export const TIMEOUT_SHOW_ERROR = 2000;

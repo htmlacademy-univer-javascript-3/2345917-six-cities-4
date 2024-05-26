@@ -1,0 +1,9 @@
+.message-error {
+  position: fixed;
+  top: 30px;
+  right: 30px;
+  padding: 10px;
+  color: white;
+  border-radius: 5px;
+  background-color: hsl(205, 77%, 32%);
+}

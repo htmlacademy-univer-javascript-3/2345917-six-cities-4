@@ -8,7 +8,7 @@ import SortingForm from '../../../components/sorting-form/sorting-form';
 function MainScreen(): JSX.Element {
   const city = useAppSelector((state) => state.city);
   const offers = useAppSelector((state) => state.offers);
-  const cityOffers = offers.filter((offer) => offer.city === city);
+  const cityOffers = offers.filter((offer) => offer.city.name === city);
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -22,14 +22,14 @@ function MainScreen(): JSX.Element {
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="#">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                    <Link to="/favorites">
+                  <Link to="/favorites">
+                    <a className="header__nav-link header__nav-link--profile" href="#">
+                      <div className="header__avatar-wrapper user__avatar-wrapper">
+                      </div>
+                      <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
                       <span className="header__favorite-count">3</span>
-                    </Link>
-                  </a>
+                    </a>
+                  </Link>
                 </li>
                 <li className="header__nav-item">
                   <a className="header__nav-link" href="#">
@@ -53,12 +53,12 @@ function MainScreen(): JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{cityOffers.length} places to stay in {city.name}</b>
+              <b className="places__found">{cityOffers.length} places to stay in {city}</b>
               <SortingForm />
               <OfferList offers={cityOffers} listType={'default'}/>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"><Map city={city} offers={cityOffers}/></section>
+              <section className="cities__map map"><Map city={cityOffers[0].city} offers={cityOffers}/></section>
             </div>
           </div>
         </div>
