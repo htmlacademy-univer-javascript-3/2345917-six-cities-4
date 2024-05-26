@@ -1,10 +1,13 @@
 import CityCard from '../../city-cards/city-cards';
 import { useAppSelector } from '../../../hooks/index';
 import Header from '../../../components/header/header';
+import { getOffers } from '../../../store/offer-process/selector';
+import { getFavorites } from '../../../store/favorite-process/selector';
 
 function FavoritesScreen(): JSX.Element{
-  const offers = useAppSelector((state) => state.offers);
-  const favorites = useAppSelector((state) => state.favorites);
+  const offers = useAppSelector(getOffers);
+  const favorites = useAppSelector(getFavorites);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   const favoriteOffers = offers.filter((offer) => favorites.includes(offer.id));
   return (
     <div className ="page">

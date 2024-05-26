@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { Review } from '../types/review';
 import { getCommentDate } from '../../components/constants/const';
 
@@ -6,6 +7,7 @@ type ReviewProps = {
 };
 
 function ReviewItem({review}: ReviewProps): JSX.Element {
+  const getCommentDateMemo = useMemo(() => getCommentDate(review.date.split('-').splice(0, 2)), [review]);
   return (
     <li className="reviews__item" key={review.id}>
       <div className="reviews__user user">
@@ -26,7 +28,7 @@ function ReviewItem({review}: ReviewProps): JSX.Element {
         <p className="reviews__text">
           {review.comment}
         </p>
-        <time className="reviews__time" >{getCommentDate(review.date.split('-').splice(0, 2))}</time>
+        <time className="reviews__time" >{getCommentDateMemo}</time>
       </div>
     </li>
   );

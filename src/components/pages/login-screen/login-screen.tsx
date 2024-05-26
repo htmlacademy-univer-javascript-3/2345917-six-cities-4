@@ -1,7 +1,8 @@
 import { FormEvent, useRef } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks/index';
-import { loginAction } from '../../../store/api-action';
+import { loginAction } from '../../../store/api-actions';
 import { AuthorizationStatus } from '../../../components/constants/status';
+import { getAuthorizationStatus } from '../../../store/user-process/selector';
 import { AppRoute } from '../../../components/constants/app-route';
 import { Link } from 'react-router-dom';
 
@@ -9,7 +10,7 @@ function LoginScreen(): JSX.Element{
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const dispatch = useAppDispatch();
-  const status = useAppSelector((state) => state.authorizationStatus);
+  const status = useAppSelector(getAuthorizationStatus);
   if (status === AuthorizationStatus.Authorization) {
     window.location.href = AppRoute.Main;
   }
