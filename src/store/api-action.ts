@@ -3,15 +3,18 @@ import { AuthorizationStatus } from '../components/constants/status';
 import { UserInfo } from '../components/types/user-info';
 import { dropToken, saveToken } from '../services/token';
 import { AuthInfo } from '../components/types/auth-info';
-import { Direction } from '../components/constants/direction';
+import { AppRoute } from '../components/constants/app-route';
 import { FavoriteInfo } from '../components/types/favorite-info';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../components/types/state';
 import { AxiosInstance } from 'axios';
 import { Offer } from '../components/types/offer';
-import { loadOffers, setError, setOffersDataLoadingStatus, addFavorite, redirectToRoute, requireAuthorization, saveEmail, showMessageInitial } from './action';
+import { loadOffers, setError, setOffersDataLoadingStatus, addFavorite, redirectToRoute, requireAuthorization, saveEmail, showMessageInitial, loadSelectedOffer, loadSelectedOfferComments, setSelectedOfferDataLoadingStatus } from './action';
 import { store } from '.';
 import { TIMEOUT_SHOW_ERROR } from '../components/constants/const';
+import { OfferData } from './../components/types/offer-data';
+import { Review } from './../components/types/review';
+import { CommentData } from './../components/types/comment-data';
 
 export const clearErrorAction = createAsyncThunk(
   'offer/clearError',
@@ -74,7 +77,7 @@ export const loginAction = createAsyncThunk<
   saveToken(token);
   dispatch(requireAuthorization(AuthorizationStatus.Authorization));
   dispatch(saveEmail(email));
-  dispatch(redirectToRoute(Direction.Main));
+  dispatch(redirectToRoute(AppRoute.Main));
 },
 );
 
@@ -90,7 +93,7 @@ export const logoutAction = createAsyncThunk<
   await api.delete(APIRoute.Logout);
   dropToken();
   dispatch(requireAuthorization(AuthorizationStatus.NoAuthorization));
-  dispatch(redirectToRoute(Direction.Main));
+  dispatch(redirectToRoute(AppRoute.Main));
   dispatch(addFavorite([]));
 },
 );
@@ -121,4 +124,34 @@ export const fetchFavoritesAction = createAsyncThunk<void, undefined, {
     const { data } = await api.get<Offer[]>(APIRoute.Favorite);
     dispatch(addFavorite(data.map((offer) => offer.id)));
   }
+);
+
+export const fetchOfferAction = createAsyncThunk<void, string, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'offer/fetchOffer',
+  async (id , { dispatch, extra: api }) => {
+    dispatch(setSelectedOfferDataLoadingStatus(true));
+    // eslint-disable-next-line @typescript-eslint/no-shadow
+    const { data : offerData } = await api.get<OfferData>(`${APIRoute.Offers}/${id}`);
+    const { data : reviews } = await api.get<Review[]>(`${APIRoute.Comments}/${id}`);
+    const { data : nearbyOffers } = await api.get<Offer[]>(`${APIRoute.Offers}/${id}/nearby`);
+    dispatch(setSelectedOfferDataLoadingStatus(false));
+    dispatch(loadSelectedOffer({offerData, reviews, nearbyOffers}));
+  }
+);
+
+export const postComment = createAsyncThunk<void, CommentData, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'comment/post',
+  async ({ comment, offerId, rating }, { dispatch, extra: api }) => {
+    await api.post(`${APIRoute.Comments}/${offerId}`, { comment, rating });
+    const { data : reviews } = await api.get<Review[]>(`${APIRoute.Comments}/${offerId}`);
+    dispatch(loadSelectedOfferComments(reviews));
+  },
 );

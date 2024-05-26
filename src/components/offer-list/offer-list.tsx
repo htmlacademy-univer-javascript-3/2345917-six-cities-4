@@ -1,10 +1,10 @@
-import getSorting from '../constants/const';
+import {getSorting} from '../constants/const';
 import { useAppSelector } from '../../hooks/index';
 import {Offer} from '../../components/types/offer';
 import CityCard from '../city-cards/city-cards';
 
 type OfferPropsList = {
-  offers: Offer[];
+  offers: Offer[] | undefined;
   listType: 'default' | 'near';
 };
 

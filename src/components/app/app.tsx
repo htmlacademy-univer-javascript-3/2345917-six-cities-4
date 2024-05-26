@@ -8,23 +8,21 @@ import FavoritesScreen from '../pages/favorites-screen/favorites-screen';
 import LoginScreen from '../pages/login-screen/login-screen';
 import OfferScreen from '../pages/offer-screen/offer-screen';
 import { AuthorizationStatus } from '../constants/status';
-import { Direction } from '../constants/direction';
+import { AppRoute } from '../../components/constants/app-route';
 import PrivateRoute from '../pages/private-route/private-route';
-import { Review } from '../types/review';
 import { useAppSelector } from '../../hooks/index';
 import LoadingScreen from '../../components/pages/loading-screen/loading-screen';
 import { fetchFavoritesAction } from '../../store/api-action';
+import { useEffect } from 'react';
 
-type AppScreenProps = {
-  reviews: Review[];
-}
-
-function App({reviews }: AppScreenProps): JSX.Element {
+function App(): JSX.Element {
   const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const statusOfAuthorization = useAppSelector((state) => state.statusOfAuthorization);
-  if (statusOfAuthorization === AuthorizationStatus.Authorization) {
+  useEffect(() => {
     store.dispatch(fetchFavoritesAction());
-  }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [AuthorizationStatus]);
   if (statusOfAuthorization === AuthorizationStatus.Unknown || isOffersDataLoading) {
     return (
       <LoadingScreen />
@@ -34,15 +32,15 @@ function App({reviews }: AppScreenProps): JSX.Element {
     <HistoryRouter history={browserHistory}>
       <Routes>
         <Route
-          path={Direction.Main}
+          path={AppRoute.Main}
           element={<MainScreen/>}
         />
         <Route
-          path={Direction.Login}
+          path={AppRoute.Login}
           element={<LoginScreen/>}
         />
         <Route
-          path={Direction.Favorites}
+          path={AppRoute.Favorites}
           element={
             <PrivateRoute>
               <FavoritesScreen/>
@@ -50,8 +48,8 @@ function App({reviews }: AppScreenProps): JSX.Element {
           }
         />
         <Route
-          path={Direction.Offer}
-          element={<OfferScreen reviews={reviews}/>}
+          path={AppRoute.Offer}
+          element={<OfferScreen/>}
         />
         <Route
           path="*"

@@ -28,7 +28,7 @@ function MainScreen(): JSX.Element {
               <OfferList offers={cityOffers} listType={'default'}/>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"><Map city={cityOffers[0].city} offers={cityOffers}/></section>
+              <section className="cities__map map"><Map city={cityOffers[0].city} points={cityOffers.map((of) => of.location)}/></section>
             </div>
           </div>
         </div>

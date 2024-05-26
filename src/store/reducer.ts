@@ -2,8 +2,9 @@ import { AuthorizationStatus } from '../components/constants/status';
 import {createReducer} from '@reduxjs/toolkit';
 import { Offer } from './../components/types/offer';
 import { cities } from '../components/constants/const';
-import { changeCity, changeSorting, changeSelectedPoint, loadOffers, setError, setOffersDataLoadingStatus, addFavorite, requireAuthorization, saveEmail, showMessageInitial } from '../store/action';
+import { changeCity, changeSorting, changeSelectedPoint, loadOffers, setError, setOffersDataLoadingStatus, addFavorite, requireAuthorization, saveEmail, showMessageInitial, loadSelectedOffer, loadSelectedOfferComments, setSelectedOfferDataLoadingStatus} from '../store/action';
 import { Point } from '../components/types/point';
+import { SelectedOffer } from './../components/types/selected-offer';
 
 type StateType = {
   statusOfAuthorization: unknown;
@@ -17,6 +18,9 @@ type StateType = {
   selectedPoint: Point | undefined;
   favorites: string[];
   showMessage: boolean;
+  selectedOfferId: string;
+  selectedOffer: SelectedOffer | undefined;
+  isSelectedOfferDataLoading: boolean;
 }
 
 const initialState: StateType = {
@@ -31,13 +35,16 @@ const initialState: StateType = {
   selectedPoint: undefined,
   favorites: [],
   showMessage: true,
+  selectedOfferId: '',
+  selectedOffer: undefined,
+  isSelectedOfferDataLoading: false,
   statusOfAuthorization: undefined
 };
 
 const reducer = createReducer(initialState, (builder) => {
   builder
     .addCase(requireAuthorization, (state, action) => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
       state.authorizationStatus = action.payload;
     })
     .addCase(saveEmail, (state, action) => {
@@ -65,7 +72,17 @@ const reducer = createReducer(initialState, (builder) => {
       state.favorites = action.payload;
     })
     .addCase(showMessageInitial, (state, action) => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
       state.showMessage = action.payload;
+    })
+    .addCase(loadSelectedOffer, (state, action) => {
+      state.selectedOffer = action.payload;
+    })
+    .addCase(setSelectedOfferDataLoadingStatus, (state, action) => {
+      state.isSelectedOfferDataLoading = action.payload;
+    })
+    .addCase(loadSelectedOfferComments, (state, action) => {
+      state.selectedOffer!.reviews = action.payload;
     });
 });
 

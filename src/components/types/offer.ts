@@ -1,4 +1,7 @@
+import { Point } from './point';
+
 export type Offer = {
+  location: Point;
   id: string;
   previewImage: string;
   title: string;
@@ -17,7 +20,7 @@ export type Offer = {
 
 export type City = {
   name: string;
-  placement: {
+  location: {
     latitude: number;
     longitude: number;
     zoom: number;
