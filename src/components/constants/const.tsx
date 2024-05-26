@@ -19,3 +19,10 @@ const getSorting = (offers: Offer[], sortingType: string): Offer[] | undefined =
 export default getSorting;
 
 export const TIMEOUT_SHOW_ERROR = 2000;
+
+export enum APIRoute {
+  Offers = '/offers',
+  Login = '/login',
+  Logout = '/logout',
+  Favorite = '/favorite'
+}
