@@ -7,23 +7,23 @@ import ErrorScreen from '../pages/error-screen/error-screen';
 import FavoritesScreen from '../pages/favorites-screen/favorites-screen';
 import LoginScreen from '../pages/login-screen/login-screen';
 import OfferScreen from '../pages/offer-screen/offer-screen';
-import { AuthorizationStatus } from '../constants/status';
 import { AppRoute } from '../../components/constants/app-route';
 import PrivateRoute from '../pages/private-route/private-route';
 import { useAppSelector } from '../../hooks/index';
+import { getAuthCheckedStatus, getAuthorizationStatus } from '../../store/user-process/selector.ts';
+import { getIsOfferDataLoading } from '../../store/offer-process/selector.ts';
 import LoadingScreen from '../../components/pages/loading-screen/loading-screen';
-import { fetchFavoritesAction } from '../../store/api-action';
+import { fetchFavoritesAction } from '../../store/api-actions';
 import { useEffect } from 'react';
 
 function App(): JSX.Element {
-  const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const statusOfAuthorization = useAppSelector((state) => state.statusOfAuthorization);
+  const isOffersDataLoading = useAppSelector(getIsOfferDataLoading);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isAuthChecked = useAppSelector(getAuthCheckedStatus);
   useEffect(() => {
     store.dispatch(fetchFavoritesAction());
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [AuthorizationStatus]);
-  if (statusOfAuthorization === AuthorizationStatus.Unknown || isOffersDataLoading) {
+  }, [authorizationStatus]);
+  if (!isAuthChecked || isOffersDataLoading) {
     return (
       <LoadingScreen />
     );

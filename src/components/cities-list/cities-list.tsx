@@ -1,5 +1,5 @@
 import { useAppDispatch } from '../../hooks/index';
-import { changeCity } from '../../store/action';
+import { changeCity } from '../../store/offer-process/offer-process';
 import { cities } from '../../components/constants/const';
 
 type CityListProps = {

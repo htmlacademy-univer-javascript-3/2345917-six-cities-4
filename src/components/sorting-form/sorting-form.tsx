@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/index';
-import { changeSorting } from '../../store/action';
+import { changeSorting } from '../../store/offer-process/offer-process';
+import { getSortingType } from '../../store/offer-process/selector';
 
 function SortingForm(): JSX.Element {
   const [isOpened, setIsOpened] = useState(false);
-  const sortingType = useAppSelector((state) => state.sortingType);
+  const sortingType = useAppSelector(getSortingType);
   const dispatch = useAppDispatch();
   const handleSortingTypeChange = (type: string) => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     dispatch(changeSorting(type));
     setIsOpened(false);
   };

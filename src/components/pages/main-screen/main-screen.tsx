@@ -4,10 +4,12 @@ import Map from '../../map/map';
 import { useAppSelector } from '../../../hooks/index';
 import CityList from '../../../components/cities-list/cities-list';
 import SortingForm from '../../../components/sorting-form/sorting-form';
+import { getCity, getOffers } from '../../../store/offer-process/selector';
 
 function MainScreen(): JSX.Element {
-  const city = useAppSelector((state) => state.city);
-  const offers = useAppSelector((state) => state.offers);
+  const city = useAppSelector(getCity);
+  const offers = useAppSelector(getOffers);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   const cityOffers = offers.filter((offer) => offer.city.name === city);
   return (
     <div className="page page--gray page--main">

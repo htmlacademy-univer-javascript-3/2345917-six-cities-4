@@ -5,23 +5,29 @@ import Map from '../../../components/map/map';
 import CityCardList from '../../../components/offer-list/offer-list';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { AuthorizationStatus } from '../../../components/constants/status';
-import { fetchOfferAction } from '../../../store/api-action';
+import { fetchOfferAction } from '../../../store/api-actions';
 import { useAppSelector } from '../../../hooks/index';
 import Header from '../../../components/header/header';
 import { useEffect } from 'react';
 import { store } from '../../../store/index';
+import { getAuthorizationStatus } from '../../../store/user-process/selector';
+import { getSelectedOffer, getisSelectedOfferDataLoading } from '../../../store/selected-offer-process/selector';
+import { getOffers } from '../../../store/offer-process/selector';
+import { changeSelectedPoint } from '../../../store/offer-process/offer-process';
 
 function OfferScreen(): JSX.Element {
-  const selectedOffer = useAppSelector((state) => state.selectedOffer);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const selectedOffer = useAppSelector(getSelectedOffer);
   const offerData = selectedOffer?.offerData;
-  const offers = useAppSelector((state) => state.offers);
+  const offers = useAppSelector(getOffers);
   const nearbyOffers = selectedOffer?.nearbyOffers;
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const rating = useAppSelector((state) => state.selectedOffer?.offerData.rating);
-  const isSelectedOfferDataLoading = useAppSelector((state) => state.isSelectedOfferDataLoading);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const rating = useAppSelector(getSelectedOffer)?.offerData.rating;
+  const isSelectedOfferDataLoading = useAppSelector(getisSelectedOfferDataLoading);
   const selectedOfferId = window.location.href.split('/').splice(-1)[0];
   useEffect(() => {
     store.dispatch(fetchOfferAction(selectedOfferId));
+    store.dispatch(changeSelectedPoint(undefined));
   }, [selectedOfferId]);
   if (isSelectedOfferDataLoading) {
     return (
@@ -111,12 +117,9 @@ function OfferScreen(): JSX.Element {
                   </p>
                 </div>
               </div>
-              <section className ="offer__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{selectedOffer?.reviews.length}</span></h2>
-                <ReviewsList reviews={selectedOffer?.reviews} />
-                {authorizationStatus === AuthorizationStatus.Authorization &&
-                  <CommentForm />}
-              </section>
+              <ReviewsList reviews={selectedOffer?.reviews} />
+              {authorizationStatus === AuthorizationStatus.Authorization &&
+                <CommentForm />}
             </div>
           </div>
           <section className ="offer__map map">

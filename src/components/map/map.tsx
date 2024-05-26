@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { memo, useEffect } from 'react';
+import { getSelectedPoint } from '../../store/offer-process/selector';
 import {Icon, Marker, layerGroup} from 'leaflet';
 import useMap from '../../hooks/use-map';
 import {City} from '../types/offer';
@@ -21,8 +22,9 @@ const activeIcon = new Icon({
   iconSize: [30, 30]
 });
 
-function Map(props: MapProps): JSX.Element {
-  const selectedPoint = useAppSelector((state) => state.selectedPoint);
+function MapComponent(props: MapProps): JSX.Element {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const selectedPoint = useAppSelector(getSelectedPoint);
   const {city, points} = props;
   const mapRef = React.useRef(null);
   const map = useMap(mapRef, city);
@@ -64,5 +66,7 @@ function Map(props: MapProps): JSX.Element {
 
   return <div style={{height: '100%'}} ref={mapRef}></div>;
 }
+
+const Map = memo(MapComponent);
 
 export default Map;

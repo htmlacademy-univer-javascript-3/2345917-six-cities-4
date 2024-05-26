@@ -1,6 +1,7 @@
 import {Navigate} from 'react-router-dom';
 import { AppRoute } from '../../constants/app-route';
 import { AuthorizationStatus } from '../../constants/status';
+import { getAuthorizationStatus } from '../../../store/user-process/selector';
 import { useAppSelector } from '../../../hooks';
 
 type PrivateRouteProps = {
@@ -9,7 +10,7 @@ type PrivateRouteProps = {
 
 function PrivateRoute(props: PrivateRouteProps): JSX.Element {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const { children } = props;
 
   return (

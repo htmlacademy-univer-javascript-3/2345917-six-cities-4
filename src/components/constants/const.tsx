@@ -17,6 +17,14 @@ const monthsMap = new Map ([
   ['12', 'December'],
 ]);
 
+export enum NameSpace {
+  Offers = 'OFFERS',
+  SelectedOffer = 'SELECTED_OFFER',
+  User = 'USER',
+  FavoriteProcess = 'FAVORITE',
+  Error = 'ERROR'
+}
+
 export const getSorting = (offers: Offer[] | undefined, sortingType: string): Offer[] | undefined => {
   const defaultOffers = offers?.slice();
   switch (sortingType) {
