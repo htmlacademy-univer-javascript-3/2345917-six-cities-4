@@ -5,8 +5,11 @@ import Map from '../../../components/map/map';
 import CityCardList from '../../../components/offer-list/offer-list';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { AuthorizationStatus } from '../../../components/constants/status';
+import { fetchOfferAction } from '../../../store/api-action';
 import { useAppSelector } from '../../../hooks/index';
 import Header from '../../../components/header/header';
+import { useEffect } from 'react';
+import { store } from '../../../store/index';
 
 function OfferScreen(): JSX.Element {
   const selectedOffer = useAppSelector((state) => state.selectedOffer);
@@ -16,6 +19,10 @@ function OfferScreen(): JSX.Element {
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   const rating = useAppSelector((state) => state.selectedOffer?.offerData.rating);
   const isSelectedOfferDataLoading = useAppSelector((state) => state.isSelectedOfferDataLoading);
+  const selectedOfferId = window.location.href.split('/').splice(-1)[0];
+  useEffect(() => {
+    store.dispatch(fetchOfferAction(selectedOfferId));
+  }, [selectedOfferId]);
   if (isSelectedOfferDataLoading) {
     return (
       <LoadingScreen />
@@ -46,7 +53,7 @@ function OfferScreen(): JSX.Element {
                 <h1 className ="offer__name">
                   {offerData?.title}
                 </h1>
-                <button className ={offerData?.isFavorite ? 'offer__bookmark-button--active button' : 'offer__bookmark-button button'} type="button">
+                <button className ={offerData?.isFavorite ? 'bookmark-button button offer__bookmark-button  offer__bookmark-button--active' : 'offer__bookmark-button button'} type="button">
                   <svg className ="offer__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
@@ -65,10 +72,10 @@ function OfferScreen(): JSX.Element {
                   {offerData?.type}
                 </li>
                 <li className ="offer__feature offer__feature--bedrooms">
-                  {offerData?.bedrooms}
+                  {`${offerData?.bedrooms} Bedrooms`}
                 </li>
                 <li className ="offer__feature offer__feature--adults">
-                  {offerData?.maxAdults}
+                  {`Max ${offerData?.maxAdults} adults`}
                 </li>
               </ul>
               <div className ="offer__price">
@@ -88,7 +95,7 @@ function OfferScreen(): JSX.Element {
               <div className ="offer__host">
                 <h2 className ="offer__host-title">Meet the host</h2>
                 <div className ="offer__host-user user">
-                  <div className ="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
+                  <div className ={`offer__avatar-wrapper ${offerData?.host.isPro ? 'offer__avatar-wrapper--pro' : 'user__avatar-wrapper'}`}>
                     <img className ="offer__avatar user__avatar" src={offerData?.host.avatarUrl} width="74" height="74" alt="Host avatar"/>
                   </div>
                   <span className ="offer__user-name">
