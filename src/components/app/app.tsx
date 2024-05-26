@@ -8,12 +8,20 @@ import { Status } from '../constants/status';
 import { Direction } from '../constants/direction';
 import PrivateRoute from '../pages/private-route/private-route';
 import { Review } from '../types/review';
+import { useAppSelector } from '../../hooks/index';
+import LoadingScreen from '../../components/pages/loading-screen/loading-screen';
 
 type AppScreenProps = {
   reviews: Review[];
 }
 
 function App({reviews }: AppScreenProps): JSX.Element {
+  const isOfferDataLoading = useAppSelector((state) => state.isOffersDataLoading);
+  if (isOfferDataLoading) {
+    return (
+      <LoadingScreen />
+    );
+  }
   return (
     <BrowserRouter>
       <Routes>

@@ -1,10 +1,7 @@
-import {Review} from './review';
-
 export type Offer = {
   id: string;
-  previewImage: [string];
+  previewImage: string;
   title: string;
-  reviews: Review [];
   city: City;
   description: string;
   isFavorite: boolean;
@@ -20,9 +17,11 @@ export type Offer = {
 
 export type City = {
   name: string;
-  latitude: number;
-  longitude: number;
-  zoom: number;
+  placement: {
+    latitude: number;
+    longitude: number;
+    zoom: number;
+  };
 }
 
 export type Autor = {
