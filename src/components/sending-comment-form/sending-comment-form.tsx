@@ -1,15 +1,29 @@
 import { ChangeEvent, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { postComment } from '../../store/api-action';
 
 type Rating = {
-  rating: string;
+  rating: number;
   comment: string;
 }
 
 function CommentForm() {
   const [formState, setFormState] = useState<Rating>({
-    rating: '',
+    rating: 0,
     comment: '',
   });
+
+  const id = useAppSelector((state) => state.selectedOffer?.offerData.id);
+  const dispatch = useAppDispatch();
+
+  const handleCommentSubmit = () => {
+    dispatch(postComment({comment: formState.comment, rating: formState.rating, offerId: id}));
+    setFormState((prevState) => ({
+      ...prevState,
+      rating: 0,
+      comment: ''
+    }));
+  };
 
   const handleCommentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setFormState((prevState) => ({
@@ -21,14 +35,14 @@ function CommentForm() {
   const handleRatingChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormState((prevState) => ({
       ...prevState,
-      rating: e.target.value,
+      rating: Number(e.target.value),
     }));
 
   };
 
   return (
 
-    <form className="reviews__form form" action="#" method="post">
+    <form className="reviews__form form" method="post">
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
         <input className="form__rating-input visually-hidden" name="rating" value="5" id="5-stars" type="radio" onChange={handleRatingChange}/>
@@ -71,7 +85,7 @@ function CommentForm() {
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled >Submit</button>
+        <button className="reviews__submit form__submit button" type="button" onClick={handleCommentSubmit} disabled = {formState.comment.length < 50 || formState.comment.length > 300 || formState.rating === 0}>Submit</button>
       </div>
     </form>
   );

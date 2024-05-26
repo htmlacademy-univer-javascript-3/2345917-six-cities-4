@@ -1,4 +1,4 @@
-export enum Direction {
+export enum AppRoute {
   Main = '/',
   Login = '/login',
   Favorites = '/favorites',

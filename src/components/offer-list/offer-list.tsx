@@ -4,7 +4,7 @@ import {Offer} from '../../components/types/offer';
 import CityCard from '../city-cards/city-cards';
 
 type OfferPropsList = {
-  offers: Offer[];
+  offers: Offer[] | undefined;
   listType: 'default' | 'near';
 };
 

@@ -8,7 +8,7 @@ import FavoritesScreen from '../pages/favorites-screen/favorites-screen';
 import LoginScreen from '../pages/login-screen/login-screen';
 import OfferScreen from '../pages/offer-screen/offer-screen';
 import { AuthorizationStatus } from '../constants/status';
-import { Direction } from '../constants/direction';
+import { AppRoute } from '../../components/constants/app-route';
 import PrivateRoute from '../pages/private-route/private-route';
 import { Review } from '../types/review';
 import { useAppSelector } from '../../hooks/index';
@@ -21,6 +21,7 @@ type AppScreenProps = {
 
 function App({reviews }: AppScreenProps): JSX.Element {
   const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const statusOfAuthorization = useAppSelector((state) => state.statusOfAuthorization);
   if (statusOfAuthorization === AuthorizationStatus.Authorization) {
     store.dispatch(fetchFavoritesAction());
@@ -34,15 +35,15 @@ function App({reviews }: AppScreenProps): JSX.Element {
     <HistoryRouter history={browserHistory}>
       <Routes>
         <Route
-          path={Direction.Main}
+          path={AppRoute.Main}
           element={<MainScreen/>}
         />
         <Route
-          path={Direction.Login}
+          path={AppRoute.Login}
           element={<LoginScreen/>}
         />
         <Route
-          path={Direction.Favorites}
+          path={AppRoute.Favorites}
           element={
             <PrivateRoute>
               <FavoritesScreen/>
@@ -50,7 +51,7 @@ function App({reviews }: AppScreenProps): JSX.Element {
           }
         />
         <Route
-          path={Direction.Offer}
+          path={AppRoute.Offer}
           element={<OfferScreen reviews={reviews}/>}
         />
         <Route
