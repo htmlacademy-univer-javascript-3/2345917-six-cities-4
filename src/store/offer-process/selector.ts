@@ -7,5 +7,7 @@ import { Offer } from '../../components/types/offer';
 export const getSortingType = (state: State): string => state[NameSpace.Offers].filterType;
 export const getOffers = (state: State): Offer[] => state[NameSpace.Offers].offers;
 export const getCity = (state: State): string => state[NameSpace.Offers].city;
+// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+export const getHasError = (state: State): boolean => state[NameSpace.Offers].hasError;
 export const getSelectedPoint = (state: State): undefined | Point => state[NameSpace.Offers].selectedPoint;
 export const getIsOfferDataLoading = (state: State): boolean => state[NameSpace.Offers].isOffersDataLoading;

@@ -8,8 +8,11 @@ const initialState: OfferProcess = {
   city: cities[0],
   offers: [],
   filterType: 'Popular',
+  hasError: false,
   selectedPoint: undefined,
   isOffersDataLoading: false,
+  isCommentPosting: false,
+  isCommentRejected: false
 };
 
 export const offerProcess = createSlice({
@@ -30,10 +33,15 @@ export const offerProcess = createSlice({
     builder
       .addCase(fetchOffersAction.pending, (state) => {
         state.isOffersDataLoading = true;
+        state.hasError = false;
       })
       .addCase(fetchOffersAction.fulfilled, (state, action) => {
         state.offers = action.payload;
         state.isOffersDataLoading = false;
+      })
+      .addCase(fetchOffersAction.rejected, (state) => {
+        state.isOffersDataLoading = false;
+        state.hasError = true;
       });
   }
 });

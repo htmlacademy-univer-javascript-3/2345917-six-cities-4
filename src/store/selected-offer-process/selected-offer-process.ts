@@ -4,6 +4,8 @@ import { SelectedOfferProcess } from '../../components/types/state';
 import { NameSpace } from '../../components/constants/const';
 
 const initialState: SelectedOfferProcess = {
+  isCommentPosting: false,
+  isCommentRejected: false,
   selectedOffer: undefined,
   isSelectedOfferDataLoading: false,
 };
@@ -27,6 +29,16 @@ export const selectedOfferProcess = createSlice({
       })
       .addCase(postComment.fulfilled, (state, action) => {
         state.selectedOffer!.reviews = action.payload;
+        state.isCommentPosting = false;
+        state.isCommentRejected = false;
+      })
+      .addCase(postComment.pending, (state) => {
+        state.isCommentPosting = true;
+        state.isCommentRejected = true;
+      })
+      .addCase(postComment.rejected, (state) => {
+        state.isCommentRejected = true;
+        state.isCommentPosting = false;
       });
   }
 });

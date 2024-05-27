@@ -9,7 +9,7 @@ import { AxiosInstance } from 'axios';
 import { redirectToRoute } from './action';
 import { Offer } from '../components/types/offer';
 import { SelectedOffer } from './../components/types/selected-offer';
-import { addFavorite } from './../store/favorite-process/favorite-process';
+import { addFavorite, addFavoriteOffers } from './../store/favorite-process/favorite-process';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { setError } from './../store/error-process/error-process';
 import { TIMEOUT_SHOW_ERROR } from '../components/constants/const';
@@ -94,6 +94,8 @@ export const fetchFavoritesAction = createAsyncThunk<void, undefined, {
   async (_arg, { dispatch, extra: api }) => {
     const { data } = await api.get<Offer[]>(APIRoute.Favorite);
     dispatch(addFavorite(data.map((offer) => offer.id)));
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+    dispatch(addFavoriteOffers(data));
   }
 );
 
