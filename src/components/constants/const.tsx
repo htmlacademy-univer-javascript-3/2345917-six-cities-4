@@ -41,6 +41,12 @@ export const getSorting = (offers: Offer[] | undefined, sortingType: string): Of
 
 export const TIMEOUT_SHOW_ERROR = 2000;
 
+export const mapType = new Map ([
+  ['default', 'cities__card place-card'],
+  ['near', 'near-places__card place-card'],
+  ['favorite', 'favorites__card place-card']
+]);
+
 export enum APIRoute {
   Offers = '/offers',
   Login = '/login',
@@ -52,5 +58,5 @@ export enum APIRoute {
 export const getCommentDate = (date: string[]): string => {
   const year = date[0];
   const month = monthsMap.get(date[1]);
-  return `${year} ${month}`;
+  return `${month} ${year}`;
 };
