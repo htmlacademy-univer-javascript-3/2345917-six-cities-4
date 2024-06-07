@@ -93,7 +93,7 @@ function OfferScreen(): JSX.Element {
               </div>
               <div className ="offer__rating rating">
                 <div className ="offer__stars rating__stars">
-                  <span style={{width: `${rating ? (rating / 5) * 100 : ''}%`}}></span>
+                  <span style={{width: `${rating ? Math.round((rating / 5) * 100 / 20) * 20 : ''}%`}}></span>
                   <span className ="visually-hidden">Rating</span>
                 </div>
                 <span className ="offer__rating-value rating__value">{rating}</span>

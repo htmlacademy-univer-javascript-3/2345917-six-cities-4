@@ -73,7 +73,7 @@ function OfferCardComponent({offer, cardType}: OffersProps): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: `${(offer.rating / 5) * 100}%` }}></span>
+            <span style={{ width: `${Math.round((offer.rating / 5) * 100 / 20) * 20}%` }}></span>
             <span className ="visually-hidden">Rating</span>
           </div>
         </div>
