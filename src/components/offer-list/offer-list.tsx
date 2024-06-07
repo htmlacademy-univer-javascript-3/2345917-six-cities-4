@@ -3,7 +3,7 @@ import {getSorting} from '../constants/const';
 import { getSortingType } from '../../store/offer-process/selector';
 import { useAppSelector } from '../../hooks/index';
 import {Offer} from '../../components/types/offer';
-import CityCard from '../city-cards/city-cards';
+import OfferCard from '../offer-cards/offer-cards';
 
 type OfferPropsList = {
   offers: Offer[] | undefined;
@@ -16,7 +16,7 @@ function CityCardListComponent({offers, listType}: OfferPropsList): JSX.Element 
   return (
     <div className={`${listType === 'default' ? 'cities__places-list places__list tabs__content' : 'near-places__list places__list'}`}>
       {useMemo(() => getSorting(offers, sortingType), [offers, sortingType])?.map((offer) => (
-        <CityCard key={offer.id} offer={offer} cardType={listType}/>
+        <OfferCard key={offer.id} offer={offer} cardType={listType}/>
       ))}
     </div>
   );

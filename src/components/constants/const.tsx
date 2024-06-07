@@ -39,6 +39,8 @@ export const getSorting = (offers: Offer[] | undefined, sortingType: string): Of
   }
 };
 
+export const NEARBY_COUNT = 3;
+export const REVIEWS_COUNT = 10;
 export const TIMEOUT_SHOW_ERROR = 2000;
 
 export const mapType = new Map ([
