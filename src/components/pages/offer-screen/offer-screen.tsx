@@ -18,16 +18,18 @@ import { getAuthorizationStatus } from '../../../store/user-process/selector';
 import { getSelectedOffer, getisSelectedOfferDataLoading } from '../../../store/selected-offer-process/selector';
 import { getOffers } from '../../../store/offer-process/selector';
 import { changeSelectedPoint } from '../../../store/offer-process/offer-process';
+import ErrorScreen from '../error-screen/error-screen';
+import { NEARBY_COUNT } from '../../constants/const';
 
 function OfferScreen(): JSX.Element {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const isSelectedOfferDataLoading = useAppSelector(getisSelectedOfferDataLoading);
   const selectedOffer = useAppSelector(getSelectedOffer);
   const offerData = selectedOffer?.offerData;
   const offers = useAppSelector(getOffers);
   const nearbyOffers = selectedOffer?.nearbyOffers;
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const rating = useAppSelector(getSelectedOffer)?.offerData.rating;
-  const isSelectedOfferDataLoading = useAppSelector(getisSelectedOfferDataLoading);
   const selectedOfferId = String(useParams().id);
   const bedrooms = offerData?.bedrooms;
   const maxAdults = offerData?.maxAdults;
@@ -39,6 +41,11 @@ function OfferScreen(): JSX.Element {
   if (isSelectedOfferDataLoading) {
     return (
       <LoadingScreen />
+    );
+  }
+  if (!selectedOffer) {
+    return (
+      <ErrorScreen />
     );
   }
   const handleAddFavorite = () => {
@@ -143,13 +150,13 @@ function OfferScreen(): JSX.Element {
             </div>
           </div>
           <section className ="offer__map map">
-            <Map points={nearbyOffers ? selectedOffer?.nearbyOffers.map((of) => of.location).slice(0, 3).concat(selectedOffer.offerData.location) : []} city={nearbyOffers ? selectedOffer?.nearbyOffers[0].city : offers[0].city} />
+            <Map points={nearbyOffers ? selectedOffer?.nearbyOffers.map((of) => of.location).slice(0, NEARBY_COUNT).concat(selectedOffer.offerData.location) : []} city={nearbyOffers ? selectedOffer?.nearbyOffers[0].city : offers[0].city} />
           </section>
         </section>
         <div className ="container">
           <section className ="near-places places">
             <h2 className ="near-places__title">Other places in the neighbourhood</h2>
-            <CityCardList offers={nearbyOffers?.slice(0, 3)} listType={'near'}/>
+            <CityCardList offers={nearbyOffers?.slice(0, NEARBY_COUNT)} listType={'near'}/>
           </section>
         </div>
       </main>

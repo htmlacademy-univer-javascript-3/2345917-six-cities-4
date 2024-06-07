@@ -1,7 +1,7 @@
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import { getFavorites } from '../../store/favorite-process/selector';
 import { getOffers } from '../../store/offer-process/selector';
-import CityCard from '../city-cards/city-cards';
+import OfferCard from '../offer-cards/offer-cards';
 import { redirectToRoute } from '../../store/action';
 import { changeCity } from '../../store/offer-process/offer-process';
 import { AppRoute } from '../constants/app-route';
@@ -30,7 +30,7 @@ function FavoritesList(): JSX.Element {
           </div>
           <div className="favorites__places">
             {favoriteOffers.filter((of) => of.city.name === city).map((offer) =>
-              <CityCard key={offer.id} offer={offer} cardType='favorite' />
+              <OfferCard key={offer.id} offer={offer} cardType='favorite' />
             )}
           </div>
         </li>

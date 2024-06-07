@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { Offer } from '../types/offer';
 import { Link } from 'react-router-dom';
-import { mapType } from '../../components/constants/const';
+import { mapType } from '../constants/const';
 import { useAppDispatch, useAppSelector } from '../../hooks/index';
 import { changeFavorite, fetchOfferAction } from '../../store/api-actions';
 import { changeSelectedPoint } from '../../store/offer-process/offer-process';
@@ -16,7 +16,7 @@ type OffersProps = {
   cardType: 'default' | 'near' | 'favorite';
 }
 
-function CityCardComponent({offer, cardType}: OffersProps): JSX.Element {
+function OfferCardComponent({offer, cardType}: OffersProps): JSX.Element {
   const dispatch = useAppDispatch();
   const favorites = useAppSelector(getFavorites);
   const clickHandleTitleOffer = () => {
@@ -54,7 +54,7 @@ function CityCardComponent({offer, cardType}: OffersProps): JSX.Element {
         </div>
       )}
       <div className={`${cardType === 'favorite' ? 'favorites' : 'cities'}__image-wrapper place-card__image-wrapper`}>
-        <a href="#">
+        <a>
           <img className="place-card__image" src={offer.previewImage} width={cardType === 'favorite' ? '150' : '260'} height={cardType === 'favorite' ? '110' : '200'} alt="Place image" />
         </a>
       </div>
@@ -86,6 +86,6 @@ function CityCardComponent({offer, cardType}: OffersProps): JSX.Element {
   );
 }
 
-const CityCard = memo(CityCardComponent);
+const OfferCard = memo(OfferCardComponent);
 
-export default CityCard;
+export default OfferCard;
