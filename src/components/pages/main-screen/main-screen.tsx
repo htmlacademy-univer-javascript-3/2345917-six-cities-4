@@ -14,7 +14,7 @@ function MainScreen(): JSX.Element {
   const cityOffers = offers.filter((offer) => offer.city.name === city);
   const hasError = useAppSelector(getHasError);
   return (
-    <div className={`page page--gray page--main ${hasError ? 'page__main--index-empty' : ''}`}>
+    <div className={`page page--gray page--main ${hasError || cityOffers.length === 0 ? 'page__main--index-empty' : ''}`}>
       <Header />
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
@@ -23,7 +23,7 @@ function MainScreen(): JSX.Element {
             <CityList chosenCity={city}/>
           </section>
         </div>
-        {hasError ? (
+        {hasError || cityOffers.length === 0 ? (
           <OfferEmpty />
         ) : (
           <div className="cities">
