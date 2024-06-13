@@ -6,7 +6,7 @@ import { getFavorites } from '../../../store/favorite-process/selector';
 function FavoritesScreen(): JSX.Element{
   const favorites = useAppSelector(getFavorites);
   return (
-    <div className ="page">
+    <div className ={`${favorites.length !== 0 ? 'page' : 'page page--favorites-empty'}`}>
       <header className ="header">
         <div className ="container">
           <Header/>

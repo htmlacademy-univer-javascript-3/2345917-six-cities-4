@@ -25,8 +25,8 @@ function Header(): JSX.Element {
             </Link>
           </div>
           <nav className="header__nav">
-            <ul className="header__nav-list">
-              {status === AuthorizationStatus.Authorization && (
+            {status === AuthorizationStatus.Authorization ? (
+              <ul className="header__nav-list">
                 <li className="header__nav-item user">
                   <Link to="/favorites" className="header__nav-link header__nav-link--profile">
                     <div className="header__avatar-wrapper user__avatar-wrapper">
@@ -35,17 +35,23 @@ function Header(): JSX.Element {
                     <span className="header__favorite-count">{favoriteOffers.length}</span>
                   </Link>
                 </li>
-              )}
-              <li className="header__nav-item">
-                {status === AuthorizationStatus.Authorization ? (
+                <li className="header__nav-item">
                   <a className="header__nav-link" onClick={handleSignOut}>
                     <span className="header__signout">Sign out</span>
                   </a>
-                ) : (
-                  <Link to="/login" className="header__nav-link">Login</Link>
-                )}
-              </li>
-            </ul>
+                </li>
+              </ul>
+            ) : (
+              <ul className="header__nav-list">
+                <li className="header__nav-item user">
+                  <Link to="/login" className="header__nav-link header__nav-link--profile">
+                    <div className="header__avatar-wrapper user__avatar-wrapper">
+                    </div>
+                    <span className="header__login">Sign in</span>
+                  </Link>
+                </li>
+              </ul>
+            )}
           </nav>
         </div>
       </div>
